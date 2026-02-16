@@ -1,0 +1,10 @@
+# robots.txt for semgoku.pl
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://semgoku.pl/sitemap.xml
+
+# Disallow admin/private pages (if any in future)
+Disallow: /api/

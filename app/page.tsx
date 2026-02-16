@@ -1,65 +1,1185 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { TrendingUp, Target, Zap, ShoppingCart, FileText, Award, Phone, Mail, Globe, X, Linkedin, MapPin } from "lucide-react";
 
 export default function Home() {
+  const [adSpend, setAdSpend] = useState([10000]);
+  const [currentMultiplier, setCurrentMultiplier] = useState([3]);
+  const [targetMultiplier, setTargetMultiplier] = useState([5]);
+  const [showPhone, setShowPhone] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+
+  const currentRevenue = adSpend[0] * currentMultiplier[0];
+  const targetRevenue = adSpend[0] * targetMultiplier[0];
+  const potentialGain = targetRevenue - currentRevenue;
+
+  // Dane pokazujące wpływ optymalizacji feedu i kampanii (w tys. PLN miesięcznie)
+  const revenueData = [
+    { month: "Mies. 1", before: 180, after: 180 },
+    { month: "Mies. 2", before: 185, after: 245 },
+    { month: "Mies. 3", before: 190, after: 310 },
+    { month: "Mies. 4", before: 195, after: 385 },
+    { month: "Mies. 5", before: 188, after: 450 },
+    { month: "Mies. 6", before: 192, after: 520 },
+  ];
+
+  // Kluczowe metryki: wpływ optymalizacji feedu produktowego
+  const feedImpactData = [
+    {
+      metric: "CTR",
+      before: 0.85,
+      after: 2.3,
+      unit: "%",
+      description: "Click-Through Rate"
+    },
+    {
+      metric: "CPC",
+      before: 2.80,
+      after: 1.65,
+      unit: "zł",
+      description: "Koszt kliknięcia",
+      reverse: true // niższy = lepszy
+    },
+    {
+      metric: "Conv. Rate",
+      before: 1.9,
+      after: 3.4,
+      unit: "%",
+      description: "Współczynnik konwersji"
+    },
+    {
+      metric: "ROAS",
+      before: 3.2,
+      after: 6.8,
+      unit: "x",
+      description: "Zwrot z wydatków"
+    },
+  ];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen bg-background">
+      {/* Contact Modal */}
+      {showContactModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <Card className="w-full max-w-lg relative">
+            <button
+              onClick={() => setShowContactModal(false)}
+              className="absolute right-4 top-4 text-muted-foreground hover:text-foreground"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <X className="w-5 h-5" />
+            </button>
+            <CardHeader>
+              <CardTitle>Skontaktuj się ze mną</CardTitle>
+              <CardDescription>Wypełnij formularz, a odezwę się w ciągu 24h</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form
+                action="https://api.web3forms.com/submit"
+                method="POST"
+                className="space-y-4"
+              >
+                <input type="hidden" name="access_key" value="fd7c1348-4032-41f7-bc4f-297a24fb6c9d" />
+                <input type="hidden" name="subject" value="Nowy kontakt z SEMGOKU.pl" />
+                <input type="hidden" name="from_name" value="Formularz SEMGOKU" />
+                <input type="hidden" name="redirect" value="/dziekuje" />
+
+                <div>
+                  <label htmlFor="website" className="block text-sm font-medium mb-2">
+                    Adres strony *
+                  </label>
+                  <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    required
+                    placeholder="twoja-strona.pl"
+                    className="w-full px-4 py-2 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    placeholder="twoj@email.pl"
+                    className="w-full px-4 py-2 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium mb-2">
+                    Wiadomość *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={5}
+                    placeholder="Opisz w kilku słowach czego potrzebujesz..."
+                    className="w-full px-4 py-2 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none"
+                  />
+                </div>
+
+                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
+                  Wyślij wiadomość
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+      )}
+
+      {/* Header */}
+      <header className="fixed top-0 w-full z-50 border-b border-border bg-background/80 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/" className="cursor-pointer">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/semgoku logo poziomo białe.svg"
+              alt="SEMGOKU - Specjalista Google Ads, PPC i Feed Optimization"
+              width={200}
+              height={50}
+              className="h-10 w-auto"
+              priority
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </Link>
+          <Button
+            asChild
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
           >
-            Documentation
-          </a>
+            <a href="#kontakt">Kontakt</a>
+          </Button>
         </div>
+      </header>
+
+      {/* Main Content */}
+      <main>
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center space-y-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
+              <Zap className="w-4 h-4" />
+              10 lat doświadczenia • Rzeszów & cała Polska
+            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold tracking-tight max-w-5xl mx-auto leading-tight">
+              Kampanie PPC, które <span className="text-primary">faktycznie</span> sprzedają
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
+              Google Ads + Meta Ads + Microsoft Advertising<br/>
+              <strong className="text-foreground">+ optymalizacja feedu produktowego</strong> (to robi różnicę)
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+              <a
+                href="#kontakt"
+                className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:scale-105"
+              >
+                Bezpłatna konsultacja 30 min
+              </a>
+              {showPhone ? (
+                <a
+                  href="tel:669809002"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
+                >
+                  <Phone className="w-5 h-5" />
+                  669 809 002
+                </a>
+              ) : (
+                <button
+                  onClick={() => setShowPhone(true)}
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
+                >
+                  <Phone className="w-5 h-5" />
+                  Pokaż numer telefonu
+                </button>
+              )}
+            </div>
+
+            {/* Trust signals */}
+            <div className="flex flex-wrap gap-6 justify-center pt-8 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Award className="w-4 h-4 text-primary" />
+                <span>10+ lat doświadczenia</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Target className="w-4 h-4 text-primary" />
+                <span>Dziesiątki projektów e-commerce</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <FileText className="w-4 h-4 text-primary" />
+                <span>Specjalizacja: Feed Optimization</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-20 px-4 bg-card/30">
+        <div className="container mx-auto max-w-4xl">
+          <Card className="border-primary/20">
+            <CardContent className="pt-12">
+              {/* Profile Image */}
+              <div className="flex flex-col items-center mb-8">
+                <div className="relative mb-4">
+                  <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl"></div>
+                  <Image
+                    src="/profile.jpeg"
+                    alt="Jarosław Rzepa - Specjalista Google Ads, PPC, Meta Ads i Feed Optimization"
+                    width={180}
+                    height={180}
+                    className="relative rounded-full border-4 border-primary/30"
+                    priority
+                  />
+                </div>
+                <a
+                  href="https://www.linkedin.com/in/jarosław-rzepa-19a599137/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 transition-colors text-sm font-medium"
+                >
+                  <Linkedin className="w-4 h-4" />
+                  <span>LinkedIn</span>
+                </a>
+              </div>
+
+              {/* Text Content */}
+              <div className="text-center mb-8">
+                <h2 className="text-4xl font-bold mb-4">Czym się różnię od innych</h2>
+                <p className="text-muted-foreground text-lg">
+                  Nie tylko kampanie - optymalizuję też feed produktowy i analizuję konwersję na stronie.
+                </p>
+              </div>
+              <div className="space-y-6 text-lg leading-relaxed">
+                <p>
+                  <strong className="text-primary">10 lat w PPC.</strong> Dziesiątki projektów dla agencji marketingowych.
+                  Kampanie dla branż od e-commerce po non-profit.
+                </p>
+                <p>
+                  Moje podejście opiera się na prostej zasadzie: <strong>kampania to tylko 20% sukcesu</strong>.
+                  Pozostałe 80%? To feed produktowy, strona docelowa i holistyczna analiza przyczyn braku konwersji.
+                </p>
+                <p>
+                  Podczas pracy w agencjach nie tylko obsługiwałem kampanie, ale też <strong>konsultowałem
+                  innych specjalistów</strong> - zarówno z agencji jak i freelancerów - w temacie optymalizacji
+                  plików produktowych i audytów kampanii.
+                </p>
+                <p className="text-primary font-semibold">
+                  Nie owijam w bawełnę - jeśli coś nie działa, powiem to wprost.
+                  Nie boję się odważnych decyzji. A gdy się na czymś nie znam - też mówię to szczerze.
+                </p>
+              </div>
+
+              <div className="mt-8 pt-8 border-t border-border">
+                <p className="text-sm text-muted-foreground mb-4">Główne branże:</p>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {["E-commerce", "Fashion & Odzież", "Kosmetyki & Beauty", "Meble & Wyposażenie",
+                    "Elektronika & AGD", "Sport & Fitness", "Automotive", "Nieruchomości",
+                    "Hotele & Turystyka", "Medycyna & Zdrowie", "B2B & SaaS", "Marketplace"].map((industry) => (
+                    <span key={industry} className="px-4 py-2 bg-primary/10 text-primary text-sm font-medium rounded-full border border-primary/20">
+                      {industry}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground text-center mt-4">
+                  + wiele innych branż e-commerce i usług
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Usługi</h2>
+            <p className="text-muted-foreground text-lg">
+              Kompleksowe wsparcie w kampaniach PPC dla e-commerce
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="border-primary/20">
+              <CardHeader>
+                <Zap className="w-12 h-12 text-primary mb-4" />
+                <CardTitle className="text-2xl">Zarządzanie kampaniami PPC</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">
+                  Kompleksowa obsługa kampanii Google Ads, Meta Ads i Microsoft Advertising
+                  z optymalizacją plików produktowych i audytem landing pages.
+                </p>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">✓</span>
+                    <span>Setup i optymalizacja kampanii multi-platform</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">✓</span>
+                    <span>Optymalizacja feedów produktowych (Google Shopping, Meta Catalog)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">✓</span>
+                    <span>Analiza i rekomendacje CRO dla landing pages</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">✓</span>
+                    <span>Regularne reporty i optymalizacja</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20">
+              <CardHeader>
+                <Target className="w-12 h-12 text-primary mb-4" />
+                <CardTitle className="text-2xl">Audyt kompleksowy</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">
+                  Dogłębna analiza kampanii, feedów produktowych i stron docelowych
+                  z konkretnymi rekomendacjami poprawy wydajności.
+                </p>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">✓</span>
+                    <span>Audyt kampanii Google Ads, Meta Ads, Microsoft Advertising</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">✓</span>
+                    <span>Analiza plików produktowych i optymalizacja feedu</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">✓</span>
+                    <span>Audyt landing pages i analiza ścieżki konwersji</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">✓</span>
+                    <span>Szczegółowy raport z priorytetami działań</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Inline CTA */}
+          <div className="mt-16 text-center">
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5 max-w-3xl mx-auto">
+              <CardContent className="pt-8 pb-8">
+                <h3 className="text-2xl font-bold mb-3">Gotowy sprawdzić potencjał Twoich kampanii?</h3>
+                <p className="text-muted-foreground mb-6">
+                  Umów bezpłatną konsultację - bez zobowiązań, bez ukrytych kosztów
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a
+                    href="#kontakt"
+                    className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
+                  >
+                    Umów konsultację
+                  </a>
+                  {showPhone ? (
+                    <a
+                      href="tel:669809002"
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
+                    >
+                      <Phone className="w-4 h-4" />
+                      669 809 002
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => setShowPhone(true)}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
+                    >
+                      <Phone className="w-4 h-4" />
+                      Pokaż telefon
+                    </button>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof - Real Results */}
+      <section className="py-20 px-4 bg-card/30">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Prawdziwe wyniki dla klientów</h2>
+            <p className="text-muted-foreground text-lg">
+              Konkretne liczby z rzeczywistych projektów e-commerce
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <Card className="border-primary/20 text-center">
+              <CardContent className="pt-8 pb-8">
+                <div className="text-5xl font-bold text-primary mb-2">+170%</div>
+                <p className="text-lg font-semibold mb-2">Wzrost przychodów</p>
+                <p className="text-sm text-muted-foreground">
+                  Sklep fashion, 6 miesięcy optymalizacji feedu + kampanii Google Shopping
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20 text-center">
+              <CardContent className="pt-8 pb-8">
+                <div className="text-5xl font-bold text-primary mb-2">-41%</div>
+                <p className="text-lg font-semibold mb-2">Redukcja CPC</p>
+                <p className="text-sm text-muted-foreground">
+                  Dzięki optymalizacji tytułów produktów i segmentacji feedu
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20 text-center">
+              <CardContent className="pt-8 pb-8">
+                <div className="text-5xl font-bold text-primary mb-2">6.8x</div>
+                <p className="text-lg font-semibold mb-2">ROAS po optymalizacji</p>
+                <p className="text-sm text-muted-foreground">
+                  Wzrost z 3.2x do 6.8x w ciągu 4 miesięcy współpracy
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Testimonial-style quote */}
+          <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
+            <CardContent className="pt-8 pb-8">
+              <div className="max-w-3xl mx-auto text-center">
+                <div className="text-6xl text-primary mb-4">"</div>
+                <p className="text-xl italic text-muted-foreground mb-6">
+                  80% sukcesu kampanii PPC to nie same ustawienia reklam - to jakość feedu produktowego
+                  i optymalizacja strony docelowej. Większość specjalistów tego nie rozumie.
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  — Jarosław Rzepa, 10 lat doświadczenia w PPC
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Results Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Wpływ optymalizacji feedu + kampanii</h2>
+            <p className="text-muted-foreground text-lg">
+              Prawdziwe wyniki z projektów e-commerce - sklep z branży fashion, budżet ~25k PLN/mies
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle>Przychody z kampanii Google Shopping</CardTitle>
+                <CardDescription>Wzrost o 170% w 6 miesięcy dzięki optymalizacji feedu</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={350}>
+                  <LineChart data={revenueData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.08)" />
+                    <XAxis
+                      dataKey="month"
+                      stroke="rgba(255, 255, 255, 0.3)"
+                      tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: 12 }}
+                    />
+                    <YAxis
+                      stroke="rgba(255, 255, 255, 0.3)"
+                      tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: 12 }}
+                      label={{ value: 'Przychód (tys. PLN)', angle: -90, position: 'insideLeft', fill: 'rgba(255, 255, 255, 0.5)', fontSize: 12 }}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "rgba(0, 0, 0, 0.9)",
+                        border: "1px solid hsl(var(--primary))",
+                        borderRadius: "8px",
+                      }}
+                      labelStyle={{ color: 'rgba(255, 255, 255, 0.9)' }}
+                      itemStyle={{ color: 'rgba(255, 255, 255, 0.9)' }}
+                      formatter={(value) => [`${value} tys. PLN`, '']}
+                    />
+                    <Legend
+                      wrapperStyle={{ paddingTop: '20px' }}
+                      iconType="line"
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="before"
+                      stroke="#6B7280"
+                      strokeWidth={2}
+                      name="Bez optymalizacji"
+                      strokeDasharray="5 5"
+                      dot={{ fill: "#6B7280", r: 4 }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="after"
+                      stroke="#FF5733"
+                      strokeWidth={3}
+                      name="Z optymalizacją feedu"
+                      dot={{ fill: "#FF5733", r: 5 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle>Kluczowe metryki - przed i po</CardTitle>
+                <CardDescription>Efekt optymalizacji feedu produktowego i kampanii</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={350}>
+                  <BarChart
+                    data={feedImpactData}
+                    layout="horizontal"
+                    margin={{ top: 5, right: 30, left: 60, bottom: 5 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.08)" />
+                    <XAxis
+                      type="number"
+                      stroke="rgba(255, 255, 255, 0.3)"
+                      tick={{ fill: 'rgba(255, 255, 255, 0.6)', fontSize: 11 }}
+                    />
+                    <YAxis
+                      type="category"
+                      dataKey="metric"
+                      stroke="rgba(255, 255, 255, 0.3)"
+                      tick={{ fill: 'rgba(255, 255, 255, 0.7)', fontSize: 12, fontWeight: 500 }}
+                      width={60}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "rgba(0, 0, 0, 0.9)",
+                        border: "1px solid hsl(var(--primary))",
+                        borderRadius: "8px",
+                      }}
+                      labelStyle={{ color: 'rgba(255, 255, 255, 0.9)', fontWeight: 600 }}
+                      formatter={(value, name, props) => {
+                        const unit = props.payload.unit;
+                        const desc = props.payload.description;
+                        return [`${value}${unit}`, name === 'before' ? 'Przed' : 'Po optymalizacji'];
+                      }}
+                    />
+                    <Legend
+                      wrapperStyle={{ paddingTop: '20px' }}
+                    />
+                    <Bar
+                      dataKey="before"
+                      fill="#6B7280"
+                      radius={[0, 4, 4, 0]}
+                      name="Przed"
+                    />
+                    <Bar
+                      dataKey="after"
+                      fill="#FF5733"
+                      radius={[0, 4, 4, 0]}
+                      name="Po optymalizacji"
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+                <div className="mt-4 pt-4 border-t border-border">
+                  <p className="text-xs text-muted-foreground text-center">
+                    CTR = Click-Through Rate | CPC = Cost Per Click | Conv. Rate = Conversion Rate | ROAS = Return on Ad Spend
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Simple Explanation */}
+          <div className="mt-12">
+            <Card className="border-primary/20 bg-card">
+              <CardContent className="pt-8 pb-8">
+                <h3 className="text-2xl font-bold mb-4 text-center">Co to oznacza w praktyce?</h3>
+                <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                        <TrendingUp className="w-6 h-6 text-primary" />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-semibold mb-1">Więcej sprzedaży z tego samego budżetu</p>
+                      <p className="text-sm text-muted-foreground">
+                        Optymalizacja feedu sprawia, że Twoje produkty są lepiej widoczne i częściej klikane - przy tych samych wydatkach na reklamy.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Target className="w-6 h-6 text-primary" />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-semibold mb-1">Niższe koszty pozyskania klienta</p>
+                      <p className="text-sm text-muted-foreground">
+                        Lepszy współczynnik klikalności (CTR) i konwersji = niższy koszt za każde kliknięcie i każdą sprzedaż.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid md:grid-cols-4 gap-6 mt-12">
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <Award className="w-12 h-12 mx-auto mb-3 text-primary" />
+                <p className="text-3xl font-bold mb-1">10+</p>
+                <p className="text-sm text-muted-foreground">Lat doświadczenia</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <TrendingUp className="w-12 h-12 mx-auto mb-3 text-primary" />
+                <p className="text-3xl font-bold mb-1">3</p>
+                <p className="text-sm text-muted-foreground">Platformy reklamowe</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <ShoppingCart className="w-12 h-12 mx-auto mb-3 text-primary" />
+                <p className="text-3xl font-bold mb-1">10+</p>
+                <p className="text-sm text-muted-foreground">Branż e-commerce</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center">
+              <CardContent className="pt-6">
+                <FileText className="w-12 h-12 mx-auto mb-3 text-primary" />
+                <p className="text-3xl font-bold mb-1">100%</p>
+                <p className="text-sm text-muted-foreground">Focus na feedach</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Feed Optimization Section */}
+      <section className="py-20 px-4 bg-card/30">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
+              <FileText className="w-4 h-4" />
+              Unikalna specjalizacja
+            </div>
+            <h2 className="text-4xl font-bold mb-4">Optymalizacja plików produktowych</h2>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+              Feed produktowy to fundament skutecznych kampanii Google Shopping i Meta Catalog.
+              Bez prawidłowych danych produktowych, nawet najlepsza kampania nie przyniesie rezultatów.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card>
+              <CardHeader>
+                <Target className="w-10 h-10 text-primary mb-2" />
+                <CardTitle>Optymalizacja tytułów i opisów</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Automatyczna i manualna optymalizacja tytułów produktów zgodnie z best practices
+                  Google Shopping i Meta Catalog dla maksymalnej widoczności.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Zap className="w-10 h-10 text-primary mb-2" />
+                <CardTitle>Segmentacja zaawansowana</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Tworzenie niestandardowych etykiet, segmentacja według marży, sezonowości,
+                  dostępności i performance metrics dla lepszej kontroli budżetu.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <TrendingUp className="w-10 h-10 text-primary mb-2" />
+                <CardTitle>Zaawansowane narzędzia</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Wykorzystanie DataFeedWatch, Google Merchant Center, Feed Management Tools
+                  i własnych skryptów dla automatyzacji i skalowania.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Help Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <Card className="border-primary/20">
+            <CardContent className="pt-12 pb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+                Nie masz klientów, ale nie wiesz czego potrzebuje Twoja firma?
+              </h2>
+              <p className="text-muted-foreground text-lg mb-8 text-center max-w-2xl mx-auto">
+                Umów się na rozmowę. Wspólnie przeanalizujemy Twoją sytuację:
+              </p>
+
+              <div className="space-y-4 mb-8 max-w-2xl mx-auto">
+                <div className="flex items-start gap-3">
+                  <span className="text-primary text-xl mt-1">✓</span>
+                  <span className="text-lg">Zrozumiemy gdzie jest problem</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-primary text-xl mt-1">✓</span>
+                  <span className="text-lg">Wybierzemy odpowiedni kanał (Google Ads, Meta, Microsoft Advertising, inne)</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-primary text-xl mt-1">✓</span>
+                  <span className="text-lg">Ustalimy metodę pracy dopasowaną do Twoich celów</span>
+                </div>
+              </div>
+
+              <p className="text-center text-muted-foreground mb-8">
+                Bez sprzedażowych ściem - powiem wprost co ma potencjał, a co nie.
+              </p>
+
+              <div className="flex justify-center">
+                <Button
+                  onClick={() => setShowContactModal(true)}
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-8"
+                >
+                  Umów bezpłatną rozmowę
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Cities Section */}
+      <section className="py-20 px-4 bg-card/30">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Obsługuję firmy z całej Polski</h2>
+            <p className="text-muted-foreground text-lg">
+              Pracuję zdalnie z klientami z różnych miast - lub z możliwością spotkań osobistych
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <Link href="/miasta/rzeszow">
+              <Card className="border-primary/20 hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/10">
+                <CardContent className="pt-6 text-center">
+                  <MapPin className="w-8 h-8 text-primary mx-auto mb-3" />
+                  <h3 className="text-xl font-bold mb-2">Rzeszów</h3>
+                  <p className="text-sm text-muted-foreground mb-3">Podkarpackie</p>
+                  <p className="text-sm text-primary">
+                    Google Ads Rzeszów →
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/miasta/warszawa">
+              <Card className="border-primary/20 hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/10">
+                <CardContent className="pt-6 text-center">
+                  <MapPin className="w-8 h-8 text-primary mx-auto mb-3" />
+                  <h3 className="text-xl font-bold mb-2">Warszawa</h3>
+                  <p className="text-sm text-muted-foreground mb-3">Mazowieckie</p>
+                  <p className="text-sm text-primary">
+                    Google Ads Warszawa →
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/miasta/krakow">
+              <Card className="border-primary/20 hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/10">
+                <CardContent className="pt-6 text-center">
+                  <MapPin className="w-8 h-8 text-primary mx-auto mb-3" />
+                  <h3 className="text-xl font-bold mb-2">Kraków</h3>
+                  <p className="text-sm text-muted-foreground mb-3">Małopolskie</p>
+                  <p className="text-sm text-primary">
+                    Google Ads Kraków →
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+
+          <div className="text-center">
+            <p className="text-muted-foreground mb-4">
+              + Wrocław, Poznań, Gdańsk, Łódź, Katowice i wszystkie miasta w Polsce
+            </p>
+            <Link
+              href="/miasta"
+              className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+            >
+              Zobacz wszystkie miasta →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section with Schema.org markup */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Najczęściej zadawane pytania</h2>
+            <p className="text-muted-foreground text-lg">
+              Odpowiedzi na podstawowe pytania o kampanie PPC i współpracę
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle className="text-xl">Czym różni się optymalizacja feedu od zwykłej kampanii Google Ads?</CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground">
+                <p>
+                  Większość specjalistów PPC skupia się tylko na ustawieniach kampanii - budżet, stawki, targetowanie.
+                  Ja idę głębiej: optymalizuję pliki produktowe (feed), które są fundamentem kampanii Shopping.
+                  Poprawa tytułów produktów, kategoryzacja, atrybuty - to często daje większy wzrost niż optymalizacja samej kampanii.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle className="text-xl">Jak wygląda współpraca? Czy wymagana jest umowa na rok?</CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground">
+                <p>
+                  Nie. Większość klientów zaczyna od audytu (jednorazowy projekt) lub umowy miesięcznej z możliwością
+                  wypowiedzenia z 30-dniowym wyprzedzeniem. Wolę elastyczne podejście - jeśli nie widzisz rezultatów,
+                  nie ma sensu przedłużać współpracy.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle className="text-xl">Jaki budżet reklamowy jest potrzebny, żeby zacząć?</CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground">
+                <p>
+                  Minimum to około 3000-5000 zł/miesiąc dla e-commerce w konkurencyjnych branżach. Przy mniejszych
+                  budżetach algorytmy Google nie mają szansy się nauczyć i wyniki będą słabe. Dla branż niszowych
+                  można startować od 2000 zł.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle className="text-xl">Czy obsługujesz tylko sklepy internetowe?</CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground">
+                <p>
+                  Nie, pracuję też z firmami B2B i usługowymi. Jednak moja specjalizacja (feed optimization)
+                  ma największy sens w e-commerce. Dla B2B robię kampanie Search, Display i lead generation
+                  na LinkedIn/Meta.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle className="text-xl">Jak szybko mogę zobaczyć pierwsze rezultaty?</CardTitle>
+              </CardHeader>
+              <CardContent className="text-muted-foreground">
+                <p>
+                  Audyt i podstawowe poprawki feedu widać od razu (czasem wzrost CTR o 50-100% w pierwszy tydzień).
+                  Pełne efekty optymalizacji kampanii - 2-3 miesiące, bo algorytmy Google potrzebują czasu na naukę.
+                  Osoby obiecujące cuda w tydzień to zwykle oszuści.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* FAQ Schema.org Markup */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Czym różni się optymalizacja feedu od zwykłej kampanii Google Ads?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Większość specjalistów PPC skupia się tylko na ustawieniach kampanii - budżet, stawki, targetowanie. Ja idę głębiej: optymalizuję pliki produktowe (feed), które są fundamentem kampanii Shopping. Poprawa tytułów produktów, kategoryzacja, atrybuty - to często daje większy wzrost niż optymalizacja samej kampanii."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Jak wygląda współpraca? Czy wymagana jest umowa na rok?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Nie. Większość klientów zaczyna od audytu (jednorazowy projekt) lub umowy miesięcznej z możliwością wypowiedzenia z 30-dniowym wyprzedzeniem. Wolę elastyczne podejście - jeśli nie widzisz rezultatów, nie ma sensu przedłużać współpracy."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Jaki budżet reklamowy jest potrzebny, żeby zacząć?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Minimum to około 3000-5000 zł/miesiąc dla e-commerce w konkurencyjnych branżach. Przy mniejszych budżetach algorytmy Google nie mają szansy się nauczyć i wyniki będą słabe. Dla branż niszowych można startować od 2000 zł."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Czy obsługujesz tylko sklepy internetowe?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Nie, pracuję też z firmami B2B i usługowymi. Jednak moja specjalizacja (feed optimization) ma największy sens w e-commerce. Dla B2B robię kampanie Search, Display i lead generation na LinkedIn/Meta."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Jak szybko mogę zobaczyć pierwsze rezultaty?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Audyt i podstawowe poprawki feedu widać od razu (czasem wzrost CTR o 50-100% w pierwszy tydzień). Pełne efekty optymalizacji kampanii - 2-3 miesiące, bo algorytmy Google potrzebują czasu na naukę. Osoby obiecujące cuda w tydzień to zwykle oszuści."
+                  }
+                }
+              ]
+            })
+          }}
+        />
+      </section>
+
+      {/* Contact Section */}
+      <section id="kontakt" className="py-20 px-4 bg-gradient-to-b from-card/30 to-background">
+        <div className="container mx-auto max-w-5xl">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
+              <Phone className="w-4 h-4" />
+              Bezpłatna konsultacja 30 min
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Porozmawiajmy o Twoich kampaniach
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Odpiszę w ciągu 24h. Żadnych zobowiązań - po prostu sprawdzę, czy mogę Ci pomóc.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Contact Form */}
+            <Card className="border-primary/20">
+              <CardHeader>
+                <CardTitle>Wyślij wiadomość</CardTitle>
+                <CardDescription>Wypełnij formularz, a odezwę się do Ciebie</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form
+                  action="https://api.web3forms.com/submit"
+                  method="POST"
+                  className="space-y-4"
+                >
+                  <input type="hidden" name="access_key" value="fd7c1348-4032-41f7-bc4f-297a24fb6c9d" />
+                  <input type="hidden" name="redirect" value="https://semgoku.pl/dziekuje" />
+
+                  <div>
+                    <label htmlFor="website" className="block text-sm font-medium mb-2">
+                      Adres strony *
+                    </label>
+                    <input
+                      type="text"
+                      id="website"
+                      name="website"
+                      required
+                      placeholder="twoja-strona.pl"
+                      className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium mb-2">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      placeholder="twoj@email.pl"
+                      className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                      Wiadomość *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      rows={5}
+                      placeholder="Opisz w kilku słowach, czego potrzebujesz..."
+                      className="w-full px-4 py-3 rounded-lg bg-muted border border-border focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none"
+                    />
+                  </div>
+
+                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 text-lg">
+                    Wyślij wiadomość
+                  </Button>
+
+                  <p className="text-xs text-muted-foreground text-center">
+                    Twoje dane są bezpieczne. Nie sprzedaję, nie udostępniam, nie spamują.
+                  </p>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* Contact Info & Quick Call */}
+            <div className="space-y-6">
+              <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
+                <CardContent className="pt-8 pb-8">
+                  <h3 className="text-2xl font-bold mb-6 text-center">Wolisz zadzwonić?</h3>
+
+                  <div className="space-y-4 mb-8">
+                    <div className="flex items-start gap-4 p-4 rounded-lg bg-background/50">
+                      <Phone className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                      <div>
+                        <p className="font-semibold mb-1">Telefon</p>
+                        {showPhone ? (
+                          <a href="tel:669809002" className="text-xl text-primary hover:underline font-bold">
+                            669 809 002
+                          </a>
+                        ) : (
+                          <button
+                            onClick={() => setShowPhone(true)}
+                            className="text-xl text-primary hover:underline font-bold"
+                          >
+                            Pokaż numer →
+                          </button>
+                        )}
+                        <p className="text-sm text-muted-foreground mt-1">Pon-Pt 9:00-17:00</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 p-4 rounded-lg bg-background/50">
+                      <Mail className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                      <div>
+                        <p className="font-semibold mb-1">Email</p>
+                        <a href="mailto:kontakt@semgoku.pl" className="text-primary hover:underline break-all">
+                          kontakt@semgoku.pl
+                        </a>
+                        <p className="text-sm text-muted-foreground mt-1">Odpowiadam w ciągu 24h</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 p-4 rounded-lg bg-background/50">
+                      <MapPin className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                      <div>
+                        <p className="font-semibold mb-1">Lokalizacja</p>
+                        <p className="text-muted-foreground">Rzeszów & cała Polska</p>
+                        <p className="text-sm text-muted-foreground mt-1">Spotkania online lub na miejscu</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-border pt-6">
+                    <p className="text-sm text-center text-muted-foreground mb-3">
+                      <strong className="text-foreground">Ograniczona dostępność:</strong> Przyjmuję maksymalnie 2-3 nowych klientów miesięcznie
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
       </main>
+
+      {/* Footer */}
+      <footer className="border-t border-border py-12 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Image
+                src="/semgoku logo kwadrat białe.svg"
+                alt="SEMGOKU - Freelancer SEM i Specjalista PPC"
+                width={120}
+                height={120}
+                className="h-16 w-auto"
+              />
+            </div>
+            <div className="text-center md:text-right space-y-3">
+              <p className="text-muted-foreground text-sm">
+                © 2026 SEMGOKU. Freelancer SEM & PPC Specialist.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-end text-sm text-muted-foreground">
+                <a href="mailto:kontakt@semgoku.pl" className="hover:text-primary transition-colors">
+                  kontakt@semgoku.pl
+                </a>
+                <span className="hidden sm:inline">•</span>
+                <a
+                  href="https://www.linkedin.com/in/jarosław-rzepa-19a599137/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 hover:text-primary transition-colors"
+                >
+                  <Linkedin className="w-4 h-4" />
+                  <span>LinkedIn</span>
+                </a>
+              </div>
+              <div className="text-xs text-muted-foreground">
+                <Link href="/miasta" className="hover:text-primary transition-colors">
+                  Miasta
+                </Link>
+                {": "}
+                <Link href="/miasta/rzeszow" className="hover:text-primary transition-colors">
+                  Rzeszów
+                </Link>
+                {" | "}
+                <Link href="/miasta/warszawa" className="hover:text-primary transition-colors">
+                  Warszawa
+                </Link>
+                {" | "}
+                <Link href="/miasta/krakow" className="hover:text-primary transition-colors">
+                  Kraków
+                </Link>
+                {" | "}
+                <Link href="/miasta" className="hover:text-primary transition-colors">
+                  Zobacz wszystkie →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
