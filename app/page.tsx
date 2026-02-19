@@ -7,13 +7,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import { TrendingUp, Target, Zap, ShoppingCart, FileText, Award, Phone, Mail, Globe, X, Linkedin, MapPin } from "lucide-react";
+import { TrendingUp, Target, Zap, ShoppingCart, FileText, Award, Phone, Mail, Globe, X, Linkedin, MapPin, Calendar } from "lucide-react";
+import { trackFormSubmit } from "@/lib/gtm";
 
 export default function Home() {
   const [adSpend, setAdSpend] = useState([10000]);
   const [currentMultiplier, setCurrentMultiplier] = useState([3]);
   const [targetMultiplier, setTargetMultiplier] = useState([5]);
-  const [showPhone, setShowPhone] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
 
   const currentRevenue = adSpend[0] * currentMultiplier[0];
@@ -166,7 +166,7 @@ export default function Home() {
       {/* Main Content */}
       <main>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
+      <section id="hero" className="pt-32 pb-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center space-y-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
@@ -189,23 +189,15 @@ export default function Home() {
               >
                 Bezpłatna konsultacja 30 min
               </a>
-              {showPhone ? (
-                <a
-                  href="tel:669809002"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
-                >
-                  <Phone className="w-5 h-5" />
-                  669 809 002
-                </a>
-              ) : (
-                <button
-                  onClick={() => setShowPhone(true)}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
-                >
-                  <Phone className="w-5 h-5" />
-                  Pokaż numer telefonu
-                </button>
-              )}
+              <a
+                href="https://cal.eu/semgoku/darmowa-konsultacja"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
+              >
+                <Phone className="w-5 h-5" />
+                Zarezerwuj termin
+              </a>
             </div>
 
             {/* Trust signals */}
@@ -228,7 +220,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section className="py-20 px-4 bg-card/30">
+      <section id="o-mnie" className="py-20 px-4 bg-card/30">
         <div className="container mx-auto max-w-4xl">
           <Card className="border-primary/20">
             <CardContent className="pt-12">
@@ -304,7 +296,7 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 px-4">
+      <section id="uslugi" className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Usługi</h2>
@@ -392,23 +384,15 @@ export default function Home() {
                   >
                     Umów konsultację
                   </a>
-                  {showPhone ? (
-                    <a
-                      href="tel:669809002"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
-                    >
-                      <Phone className="w-4 h-4" />
-                      669 809 002
-                    </a>
-                  ) : (
-                    <button
-                      onClick={() => setShowPhone(true)}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
-                    >
-                      <Phone className="w-4 h-4" />
-                      Pokaż telefon
-                    </button>
-                  )}
+                  <a
+                    href="https://cal.eu/semgoku/darmowa-konsultacja"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
+                  >
+                    <Phone className="w-4 h-4" />
+                    Zarezerwuj termin
+                  </a>
                 </div>
               </CardContent>
             </Card>
@@ -417,7 +401,7 @@ export default function Home() {
       </section>
 
       {/* Social Proof - Real Results */}
-      <section className="py-20 px-4 bg-card/30">
+      <section id="social-proof" className="py-20 px-4 bg-card/30">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Prawdziwe wyniki dla klientów</h2>
@@ -477,7 +461,7 @@ export default function Home() {
       </section>
 
       {/* Results Section */}
-      <section className="py-20 px-4">
+      <section id="wyniki" className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Wpływ optymalizacji feedu + kampanii</h2>
@@ -678,7 +662,7 @@ export default function Home() {
       </section>
 
       {/* Feed Optimization Section */}
-      <section className="py-20 px-4 bg-card/30">
+      <section id="feed-optimization" className="py-20 px-4 bg-card/30">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-4">
@@ -736,7 +720,7 @@ export default function Home() {
       </section>
 
       {/* Help Section */}
-      <section className="py-20 px-4">
+      <section id="pomoc" className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <Card className="border-primary/20">
             <CardContent className="pt-12 pb-12">
@@ -781,7 +765,7 @@ export default function Home() {
       </section>
 
       {/* Cities Section */}
-      <section className="py-20 px-4 bg-card/30">
+      <section id="miasta" className="py-20 px-4 bg-card/30">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Obsługuję firmy z całej Polski</h2>
@@ -846,7 +830,7 @@ export default function Home() {
       </section>
 
       {/* FAQ Section with Schema.org markup */}
-      <section className="py-20 px-4">
+      <section id="faq" className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Najczęściej zadawane pytania</h2>
@@ -1005,6 +989,7 @@ export default function Home() {
                   action="https://api.web3forms.com/submit"
                   method="POST"
                   className="space-y-4"
+                  onSubmit={() => trackFormSubmit('kontakt', 'sekcja_kontakt')}
                 >
                   <input type="hidden" name="access_key" value="fd7c1348-4032-41f7-bc4f-297a24fb6c9d" />
                   <input type="hidden" name="redirect" value="https://semgoku.pl/dziekuje" />
@@ -1066,26 +1051,22 @@ export default function Home() {
             <div className="space-y-6">
               <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
                 <CardContent className="pt-8 pb-8">
-                  <h3 className="text-2xl font-bold mb-6 text-center">Wolisz zadzwonić?</h3>
+                  <h3 className="text-2xl font-bold mb-6 text-center">Umów się na rozmowę</h3>
 
                   <div className="space-y-4 mb-8">
                     <div className="flex items-start gap-4 p-4 rounded-lg bg-background/50">
                       <Phone className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
                       <div>
-                        <p className="font-semibold mb-1">Telefon</p>
-                        {showPhone ? (
-                          <a href="tel:669809002" className="text-xl text-primary hover:underline font-bold">
-                            669 809 002
-                          </a>
-                        ) : (
-                          <button
-                            onClick={() => setShowPhone(true)}
-                            className="text-xl text-primary hover:underline font-bold"
-                          >
-                            Pokaż numer →
-                          </button>
-                        )}
-                        <p className="text-sm text-muted-foreground mt-1">Pon-Pt 9:00-17:00</p>
+                        <p className="font-semibold mb-1">Darmowa konsultacja</p>
+                        <a
+                          href="https://cal.eu/semgoku/darmowa-konsultacja"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xl text-primary hover:underline font-bold"
+                        >
+                          Zarezerwuj termin →
+                        </a>
+                        <p className="text-sm text-muted-foreground mt-1">Wybierz dogodną godzinę w kalendarzu</p>
                       </div>
                     </div>
 

@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SEMGOKU — Portfolio & Landing Page
+
+Strona portfolio Jarosława Rzepy — specjalisty PPC, Google Ads i Feed Optimization z Rzeszowa.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router, React 19)
+- **Styling:** Tailwind CSS v4 (CSS-first)
+- **UI:** shadcn/ui (Button, Card, Slider)
+- **Charts:** Recharts 3.7
+- **Icons:** Lucide React
+- **Forms:** Web3Forms
+- **Booking:** Cal.com
+- **Analytics:** Google Tag Manager + dataLayer
+- **Deploy:** Netlify
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `NEXT_PUBLIC_GTM_ID` | Google Tag Manager container ID (e.g. `GTM-XXXXXXX`) | For analytics |
 
-## Learn More
+Create `.env.local`:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+  layout.tsx          # Root layout, GTM, Consent Mode v2, Schema.org
+  page.tsx            # Main portfolio page (client component)
+  dziekuje/
+    page.tsx          # Thank you page (post-form conversion)
+    ConversionTracker.tsx  # generate_lead event
+  miasta/
+    page.tsx          # City hub
+    rzeszow/          # City landing pages
+    krakow/
+    warszawa/
+components/
+  GoogleTagManager.tsx    # GTM script injection (head + noscript)
+  DataLayerTracker.tsx    # Global event tracker (clicks, scroll, sections)
+  CityPageTracker.tsx     # City page view tracking
+  ui/                     # shadcn/ui components
+lib/
+  gtm.ts                 # dataLayer helper functions & event definitions
+```
 
-## Deploy on Vercel
+## Analytics & DataLayer
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Events
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Event | Trigger | Key params |
+|-------|---------|------------|
+| `page_view` | Every SPA navigation | `page_type`, `page_path`, `page_title` |
+| `section_view` | Section enters viewport (30%) | `section_name` |
+| `scroll_depth` | 25/50/75/90/100% scroll | `scroll_percentage` |
+| `cta_click` | Primary button click | `cta_text`, `cta_location`, `cta_url` |
+| `cal_booking_click` | Cal.com link click | `booking_type`, `click_location` |
+| `outbound_click` | External/mailto/tel link | `link_url`, `link_text`, `link_domain` |
+| `form_submit` | Contact form submit | `form_name`, `form_location` |
+| `generate_lead` | Thank you page load (GA4 recommended) | `conversion_type`, `value`, `currency` |
+| `city_page_view` | City landing page load | `city_name`, `page_type` |
+
+### Consent Mode v2
+
+Google Consent Mode v2 is initialized **before** GTM with all consent types set to `denied` by default (RODO/GDPR compliant). A CMP (e.g. CookieYes) is needed to update consent to `granted` after user acceptance.
+
+## Deploy
+
+Deployed on Netlify with `@netlify/plugin-nextjs`.
+
+```bash
+npm run build
+```

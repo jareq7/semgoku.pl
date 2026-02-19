@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, ArrowLeft, Mail } from "lucide-react";
+import ConversionTracker from "./ConversionTracker";
 
 export const metadata = {
   title: "Dziękuję za wiadomość - SEMGOKU",
@@ -12,6 +13,7 @@ export const metadata = {
 export default function ThanksPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <ConversionTracker />
       {/* Header */}
       <header className="border-b border-border bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
@@ -51,7 +53,7 @@ export default function ThanksPage() {
                   Nie zostawiam ludzi bez odpowiedzi.
                 </p>
                 <p className="pt-4">
-                  Nie możesz czekać? Telefon: <a href="tel:669809002" className="text-primary hover:underline font-semibold">669 809 002</a>
+                  Nie możesz czekać? <a href="https://cal.eu/semgoku/darmowa-konsultacja" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">Zarezerwuj termin rozmowy →</a>
                 </p>
               </div>
 

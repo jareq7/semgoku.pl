@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Award, TrendingUp, Target, ArrowLeft } from "lucide-react";
 import PhoneButton from "./PhoneButton";
+import CityPageTracker from "@/components/CityPageTracker";
 
 export const metadata = {
   title: "Specjalista Google Ads Kraków | PPC dla firm z Małopolski | SEMGOKU",
@@ -24,6 +25,7 @@ export const metadata = {
 export default function KrakowPage() {
   return (
     <div className="min-h-screen bg-background">
+      <CityPageTracker cityName="Kraków" />
       {/* Header */}
       <header className="border-b border-border bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">

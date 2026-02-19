@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { GoogleTagManagerHead, GoogleTagManagerBody } from "@/components/GoogleTagManager";
+import DataLayerTracker from "@/components/DataLayerTracker";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -68,6 +70,23 @@ export default function RootLayout({
   return (
     <html lang="pl" className="dark">
       <head>
+        {/* Google Consent Mode v2 — must be BEFORE GTM (RODO/GDPR) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'analytics_storage': 'denied',
+                'wait_for_update': 500
+              });
+            `,
+          }}
+        />
+        <GoogleTagManagerHead />
         {/* Schema.org Person Markup */}
         <script
           type="application/ld+json"
@@ -143,7 +162,6 @@ export default function RootLayout({
                 }
               ],
               "priceRange": "$$",
-              "openingHours": "Mo-Fr 09:00-17:00",
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": "Usługi PPC",
@@ -181,6 +199,8 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased font-sans`}
       >
+        <GoogleTagManagerBody />
+        <DataLayerTracker />
         {children}
       </body>
     </html>
