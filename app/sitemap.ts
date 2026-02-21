@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...cities.map((city) => ({
       url: `${baseUrl}/miasta/${city}`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
     {
