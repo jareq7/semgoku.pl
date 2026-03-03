@@ -103,16 +103,11 @@ export default function MiastaPage() {
           <h2 className="text-3xl font-bold mb-8 text-center">Wszystkie miasta wojewódzkie</h2>
           <div className="grid md:grid-cols-4 gap-4">
             {otherCities.map((city) => (
-              <Card key={city.slug} className="text-center hover:border-primary/30 transition-all">
+              <Card key={city.slug} className="text-center opacity-70">
                 <CardContent className="pt-6">
                   <h3 className="font-semibold text-lg mb-1">{city.name}</h3>
                   <p className="text-sm text-muted-foreground mb-3">{city.region}</p>
-                  <Link
-                    href={`/miasta/${city.slug}`}
-                    className="text-sm text-primary hover:underline"
-                  >
-                    Zobacz więcej →
-                  </Link>
+                  <span className="text-xs text-muted-foreground/50 italic">wkrótce</span>
                 </CardContent>
               </Card>
             ))}
