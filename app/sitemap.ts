@@ -3,7 +3,12 @@ import { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://semgoku.pl'
 
-  const cities = ['rzeszow', 'warszawa', 'krakow'];
+  const cities = [
+    'rzeszow', 'warszawa', 'krakow',
+    'lodz', 'wroclaw', 'poznan', 'gdansk', 'szczecin',
+    'bydgoszcz', 'lublin', 'bialystok', 'katowice',
+    'kielce', 'olsztyn', 'zielona-gora', 'opole',
+  ];
 
   return [
     {
