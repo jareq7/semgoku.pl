@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   trackCalBookingClick,
   trackCtaClick,
+  trackFormStart,
   trackOutboundClick,
   trackPageView,
   trackScrollDepth,
@@ -46,12 +47,14 @@ export default function DataLayerTracker() {
   const pathname = usePathname();
   const trackedSections = useRef<Set<string>>(new Set());
   const trackedDepths = useRef<Set<number>>(new Set());
+  const trackedForms = useRef<Set<string>>(new Set());
 
   // Reset dataLayer and re-track on SPA navigation
   useEffect(() => {
     resetDataLayer();
     trackedSections.current.clear();
     trackedDepths.current.clear();
+    trackedForms.current.clear();
 
     const pageType = pathname === "/" ? "homepage"
       : pathname.startsWith("/miasta/") ? "city_landing"
@@ -92,6 +95,22 @@ export default function DataLayerTracker() {
     ) {
       trackCtaClick(text, getSectionId(el), href);
     }
+  }, []);
+
+  const handleFocusin = useCallback((e: FocusEvent) => {
+    const target = e.target as HTMLElement;
+    const isFormField = target.matches("input:not([type=hidden]), textarea, select");
+    if (!isFormField) return;
+
+    const form = target.closest("form");
+    if (!form) return;
+
+    const formName = form.getAttribute("data-form-name") || "unknown";
+    if (trackedForms.current.has(formName)) return;
+
+    trackedForms.current.add(formName);
+    const formLocation = form.closest("section[id]")?.id || "modal";
+    trackFormStart(formName, formLocation);
   }, []);
 
   const handleScroll = useCallback(() => {
@@ -136,15 +155,17 @@ export default function DataLayerTracker() {
 
   useEffect(() => {
     document.addEventListener("click", handleClick, true);
+    document.addEventListener("focusin", handleFocusin, true);
     window.addEventListener("scroll", handleScroll, { passive: true });
     const cleanupObserver = observeSections();
 
     return () => {
       document.removeEventListener("click", handleClick, true);
+      document.removeEventListener("focusin", handleFocusin, true);
       window.removeEventListener("scroll", handleScroll);
       cleanupObserver?.();
     };
-  }, [handleClick, handleScroll, observeSections]);
+  }, [handleClick, handleFocusin, handleScroll, observeSections]);
 
   return null;
 }

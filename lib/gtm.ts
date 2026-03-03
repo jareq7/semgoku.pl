@@ -37,11 +37,12 @@ export function resetDataLayer() {
     form_name: undefined,
     form_location: undefined,
     conversion_type: undefined,
-    scroll_percentage: undefined,
+    percent_scrolled: undefined,
     section_name: undefined,
     link_url: undefined,
     link_domain: undefined,
     link_text: undefined,
+    outbound: undefined,
   });
 }
 
@@ -70,6 +71,14 @@ export function trackCalBookingClick(clickLocation: string) {
     event: 'cal_booking_click',
     booking_type: 'darmowa_konsultacja',
     click_location: clickLocation,
+  });
+}
+
+export function trackFormStart(formName: string, formLocation: string) {
+  pushDataLayer({
+    event: 'form_start',
+    form_name: formName,
+    form_location: formLocation,
   });
 }
 
@@ -105,8 +114,8 @@ export function trackCityPageView(cityName: string) {
 
 export function trackScrollDepth(depth: number) {
   pushDataLayer({
-    event: 'scroll_depth',
-    scroll_percentage: depth,
+    event: 'scroll',
+    percent_scrolled: depth,
   });
 }
 
@@ -123,7 +132,8 @@ export function trackSectionView(sectionName: string) {
  */
 export function trackOutboundClick(linkUrl: string, linkText: string, linkDomain: string) {
   pushDataLayer({
-    event: 'outbound_click',
+    event: 'click',
+    outbound: true,
     link_url: linkUrl,
     link_text: linkText,
     link_domain: linkDomain,

@@ -41,6 +41,8 @@ export default function Home() {
                 action="https://api.web3forms.com/submit"
                 method="POST"
                 className="space-y-4"
+                data-form-name="kontakt_modal"
+                onSubmit={() => trackFormSubmit('kontakt', 'modal')}
               >
                 <input type="hidden" name="access_key" value="fd7c1348-4032-41f7-bc4f-297a24fb6c9d" />
                 <input type="hidden" name="subject" value="Nowy kontakt z SEMGOKU.pl" />
@@ -746,6 +748,7 @@ export default function Home() {
                   action="https://api.web3forms.com/submit"
                   method="POST"
                   className="space-y-4"
+                  data-form-name="kontakt_inline"
                   onSubmit={() => trackFormSubmit('kontakt', 'sekcja_kontakt')}
                 >
                   <input type="hidden" name="access_key" value="fd7c1348-4032-41f7-bc4f-297a24fb6c9d" />
@@ -913,6 +916,14 @@ export default function Home() {
                 <Link href="/miasta" className="hover:text-primary transition-colors">
                   Zobacz wszystkie →
                 </Link>
+              </div>
+              <div className="text-xs text-muted-foreground">
+                <button
+                  onClick={() => window.dispatchEvent(new Event("semgoku:open-consent"))}
+                  className="hover:text-primary transition-colors cursor-pointer"
+                >
+                  Zarządzaj zgodami
+                </button>
               </div>
             </div>
           </div>

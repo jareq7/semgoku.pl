@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { GoogleTagManagerHead, GoogleTagManagerBody } from "@/components/GoogleTagManager";
 import DataLayerTracker from "@/components/DataLayerTracker";
+import ConsentBanner from "@/components/ConsentBanner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -201,6 +202,7 @@ export default function RootLayout({
       >
         <GoogleTagManagerBody />
         <DataLayerTracker />
+        <ConsentBanner />
         {children}
       </body>
     </html>
