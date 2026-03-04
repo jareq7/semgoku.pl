@@ -113,6 +113,10 @@ export default function Home() {
               priority
             />
           </Link>
+          <nav className="hidden sm:flex items-center gap-6 text-sm text-muted-foreground">
+            <Link href="/uslugi" className="hover:text-foreground transition-colors">Usługi</Link>
+            <a href="#kontakt" className="hover:text-foreground transition-colors">Kontakt</a>
+          </nav>
           <Button
             asChild
             className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
