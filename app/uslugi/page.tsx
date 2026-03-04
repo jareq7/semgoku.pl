@@ -59,7 +59,7 @@ const services = [
       "Optymalizacja tytułów i opisów produktów pod frazy zakupowe",
       "Zaawansowana segmentacja (custom labels, kategorie)",
       "Konfiguracja Google Merchant Center",
-      "Integracja z DataFeedWatch lub Channable",
+      "Integracja z Sembot",
       "Reguły transformacji danych bez ingerencji w sklep",
     ],
     forWhom: "Dla sklepów e-commerce z katalogiem produktów w Google Shopping lub Meta Catalog.",

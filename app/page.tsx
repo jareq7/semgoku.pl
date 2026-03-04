@@ -473,7 +473,7 @@ export default function Home() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Wykorzystanie DataFeedWatch, Google Merchant Center, Feed Management Tools
+                  Wykorzystanie Sembot, Google Merchant Center, Feed Management Tools
                   i własnych skryptów dla automatyzacji i skalowania.
                 </p>
               </CardContent>
