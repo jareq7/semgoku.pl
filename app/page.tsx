@@ -147,19 +147,19 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
               <a
+                href="#kontakt"
+                className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:scale-105"
+              >
+                Bezpłatna konsultacja 30 min
+              </a>
+              <a
                 href="https://cal.eu/semgoku/darmowa-konsultacja"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:scale-105"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold rounded-lg text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Phone className="w-5 h-5" />
-                Zarezerwuj bezpłatną konsultację
-              </a>
-              <a
-                href="#kontakt"
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Napisz wiadomość ↓
+                <Phone className="w-4 h-4" />
+                Zarezerwuj rozmowę
               </a>
             </div>
 
@@ -399,10 +399,10 @@ export default function Home() {
             <Card className="border-primary/20 text-center">
               <CardContent className="pt-8 pb-8">
                 <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">ROAS</p>
-                <div className="text-5xl font-bold text-primary mb-2">6,8</div>
+                <div className="text-5xl font-bold text-primary mb-2">680%</div>
                 <p className="text-lg font-semibold mb-2">zwrot z wydatków</p>
                 <p className="text-sm text-muted-foreground">
-                  Wzrost z 3,2 do 6,8 w ciągu 4 miesięcy współpracy
+                  Wzrost z 320% do 680% w ciągu 4 miesięcy współpracy
                 </p>
               </CardContent>
             </Card>
