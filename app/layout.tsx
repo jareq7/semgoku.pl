@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | SEMGOKU"
   },
   description: "Freelancer SEM z 10-letnim doświadczeniem. Google Ads, Meta Ads, Microsoft Advertising + optymalizacja feedów produktowych i analiza konwersji. Kampanie PPC dla e-commerce.",
-  keywords: ["specjalista google ads", "ppc specialist", "sem", "feed optimization", "google shopping", "meta ads", "facebook ads", "microsoft advertising", "kampanie reklamowe", "freelancer ppc", "optymalizacja kampanii", "rzeszów", "warszawa", "kraków"],
+  keywords: ["specjalista google ads", "ppc specialist", "sem", "feed optimization", "google shopping", "meta ads", "facebook ads", "microsoft advertising", "kampanie reklamowe", "freelancer ppc", "optymalizacja kampanii", "sembot", "google merchant center", "performance max", "pmax", "remarketing", "google analytics 4", "ga4", "roas", "kampanie ecommerce", "rzeszów", "warszawa", "kraków"],
   authors: [{ name: "Jarosław Rzepa" }],
   creator: "Jarosław Rzepa",
   publisher: "SEMGOKU",
