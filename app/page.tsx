@@ -147,19 +147,19 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
               <a
-                href="#kontakt"
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:scale-105"
-              >
-                Bezpłatna konsultacja 30 min
-              </a>
-              <a
                 href="https://cal.eu/semgoku/darmowa-konsultacja"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:scale-105"
               >
                 <Phone className="w-5 h-5" />
-                Zarezerwuj termin
+                Zarezerwuj bezpłatną konsultację
+              </a>
+              <a
+                href="#kontakt"
+                className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Napisz wiadomość ↓
               </a>
             </div>
 
@@ -376,30 +376,33 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             <Card className="border-primary/20 text-center">
               <CardContent className="pt-8 pb-8">
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Przychody</p>
                 <div className="text-5xl font-bold text-primary mb-2">+170%</div>
-                <p className="text-lg font-semibold mb-2">Wzrost przychodów</p>
+                <p className="text-lg font-semibold mb-2">wzrost w 6 miesięcy</p>
                 <p className="text-sm text-muted-foreground">
-                  Sklep fashion, 6 miesięcy optymalizacji feedu + kampanii Google Shopping
+                  Sklep fashion — optymalizacja feedu + kampanie Google Shopping
                 </p>
               </CardContent>
             </Card>
 
             <Card className="border-primary/20 text-center">
               <CardContent className="pt-8 pb-8">
-                <div className="text-5xl font-bold text-primary mb-2">-41%</div>
-                <p className="text-lg font-semibold mb-2">Redukcja CPC</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Koszt kliknięcia</p>
+                <div className="text-5xl font-bold text-primary mb-2">−41%</div>
+                <p className="text-lg font-semibold mb-2">niższy CPC</p>
                 <p className="text-sm text-muted-foreground">
-                  Dzięki optymalizacji tytułów produktów i segmentacji feedu
+                  Optymalizacja tytułów produktów i segmentacja feedu
                 </p>
               </CardContent>
             </Card>
 
             <Card className="border-primary/20 text-center">
               <CardContent className="pt-8 pb-8">
-                <div className="text-5xl font-bold text-primary mb-2">6.8x</div>
-                <p className="text-lg font-semibold mb-2">ROAS po optymalizacji</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">ROAS</p>
+                <div className="text-5xl font-bold text-primary mb-2">6,8</div>
+                <p className="text-lg font-semibold mb-2">zwrot z wydatków</p>
                 <p className="text-sm text-muted-foreground">
-                  Wzrost z 3.2x do 6.8x w ciągu 4 miesięcy współpracy
+                  Wzrost z 3,2 do 6,8 w ciągu 4 miesięcy współpracy
                 </p>
               </CardContent>
             </Card>
