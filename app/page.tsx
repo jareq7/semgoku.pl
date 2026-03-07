@@ -145,22 +145,14 @@ export default function Home() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+            <div className="flex flex-col items-center gap-3 pt-6">
               <a
                 href="#kontakt"
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:scale-105"
+                className="inline-flex items-center justify-center px-10 py-4 text-lg font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:scale-105"
               >
-                Bezpłatna konsultacja 30 min
+                Napisz do mnie — oddzwonię
               </a>
-              <a
-                href="https://cal.eu/semgoku/darmowa-konsultacja"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold rounded-lg text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <Phone className="w-4 h-4" />
-                Zarezerwuj rozmowę
-              </a>
+              <p className="text-sm text-muted-foreground">Odpowiadam w ciągu 24h</p>
             </div>
 
             {/* Trust signals */}
@@ -338,25 +330,14 @@ export default function Home() {
               <CardContent className="pt-8 pb-8">
                 <h3 className="text-2xl font-bold mb-3">Gotowy sprawdzić potencjał Twoich kampanii?</h3>
                 <p className="text-muted-foreground mb-6">
-                  Umów bezpłatną konsultację - bez zobowiązań, bez ukrytych kosztów
+                  Napisz — bez zobowiązań, bez ukrytych kosztów. Oddzwonię.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a
-                    href="#kontakt"
-                    className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
-                  >
-                    Umów konsultację
-                  </a>
-                  <a
-                    href="https://cal.eu/semgoku/darmowa-konsultacja"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold rounded-lg border-2 border-primary/30 text-foreground hover:bg-primary/10 transition-all"
-                  >
-                    <Phone className="w-4 h-4" />
-                    Zarezerwuj termin
-                  </a>
-                </div>
+                <a
+                  href="#kontakt"
+                  className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
+                >
+                  Napisz do mnie
+                </a>
               </CardContent>
             </Card>
           </div>
@@ -522,7 +503,7 @@ export default function Home() {
                   size="lg"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-8"
                 >
-                  Umów bezpłatną rozmowę
+                  Napisz do mnie
                 </Button>
               </div>
             </CardContent>
@@ -818,33 +799,26 @@ export default function Home() {
             <div className="space-y-6">
               <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
                 <CardContent className="pt-8 pb-8">
-                  <h3 className="text-2xl font-bold mb-6 text-center">Umów się na rozmowę</h3>
+                  <h3 className="text-2xl font-bold mb-6 text-center">Jak to działa?</h3>
 
                   <div className="space-y-4 mb-8">
                     <div className="flex items-start gap-4 p-4 rounded-lg bg-background/50">
-                      <Phone className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                      <Mail className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
                       <div>
-                        <p className="font-semibold mb-1">Darmowa konsultacja</p>
-                        <a
-                          href="https://cal.eu/semgoku/darmowa-konsultacja"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xl text-primary hover:underline font-bold"
-                        >
-                          Zarezerwuj termin →
+                        <p className="font-semibold mb-1">Napisz do mnie</p>
+                        <a href="mailto:kontakt@semgoku.pl" className="text-primary hover:underline break-all">
+                          kontakt@semgoku.pl
                         </a>
-                        <p className="text-sm text-muted-foreground mt-1">Wybierz dogodną godzinę w kalendarzu</p>
+                        <p className="text-sm text-muted-foreground mt-1">Albo przez formularz obok — odpiszę w ciągu 24h</p>
                       </div>
                     </div>
 
                     <div className="flex items-start gap-4 p-4 rounded-lg bg-background/50">
-                      <Mail className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                      <Phone className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
                       <div>
-                        <p className="font-semibold mb-1">Email</p>
-                        <a href="mailto:kontakt@semgoku.pl" className="text-primary hover:underline break-all">
-                          kontakt@semgoku.pl
-                        </a>
-                        <p className="text-sm text-muted-foreground mt-1">Odpowiadam w ciągu 24h</p>
+                        <p className="font-semibold mb-1">Oddzwonię</p>
+                        <p className="text-muted-foreground">Ustalimy termin rozmowy który pasuje Tobie</p>
+                        <p className="text-sm text-muted-foreground mt-1">Bez narzuconych godzin, bez kalendarzy</p>
                       </div>
                     </div>
 
@@ -853,7 +827,7 @@ export default function Home() {
                       <div>
                         <p className="font-semibold mb-1">Lokalizacja</p>
                         <p className="text-muted-foreground">Rzeszów & cała Polska</p>
-                        <p className="text-sm text-muted-foreground mt-1">Spotkania online lub na miejscu</p>
+                        <p className="text-sm text-muted-foreground mt-1">Współpraca zdalna lub na miejscu</p>
                       </div>
                     </div>
                   </div>

@@ -93,7 +93,6 @@ export default function RootLayout({
               "description": "Freelancer SEM z 10-letnim doświadczeniem w Google Ads, Meta Ads, Microsoft Advertising i optymalizacji feedów produktowych",
               "url": "https://semgoku.pl",
               "email": "kontakt@semgoku.pl",
-              "telephone": "+48669809002",
               "sameAs": [
                 "https://www.linkedin.com/in/jarosław-rzepa-19a599137/"
               ],
@@ -128,7 +127,6 @@ export default function RootLayout({
               "name": "SEMGOKU - Specjalista Google Ads i PPC",
               "description": "Freelancer SEM specjalizujący się w kampaniach Google Ads, Meta Ads, Microsoft Advertising oraz optymalizacji feedów produktowych dla e-commerce",
               "url": "https://semgoku.pl",
-              "telephone": "+48669809002",
               "email": "kontakt@semgoku.pl",
               "address": {
                 "@type": "PostalAddress",
