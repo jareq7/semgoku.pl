@@ -348,62 +348,101 @@ export default function Home() {
       <section id="social-proof" className="py-20 px-4 bg-card/30">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Prawdziwe wyniki dla klientów</h2>
+            <h2 className="text-4xl font-bold mb-4">Wybrane projekty</h2>
             <p className="text-muted-foreground text-lg">
-              Konkretne liczby z rzeczywistych projektów e-commerce
+              Wyzwanie → działania → wyniki
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <Card className="border-primary/20 text-center">
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Case Study 1 */}
+            <Card className="border-primary/20">
               <CardContent className="pt-8 pb-8">
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Przychody</p>
-                <div className="text-5xl font-bold text-primary mb-2">+170%</div>
-                <p className="text-lg font-semibold mb-2">wzrost w 6 miesięcy</p>
-                <p className="text-sm text-muted-foreground">
-                  Sklep fashion — optymalizacja feedu + kampanie Google Shopping
+                <div className="flex flex-wrap gap-2 mb-5">
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">Moda & odzież</span>
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground">6 miesięcy</span>
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground">Google Shopping</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-5">
+                  Kampanie Shopping generowały ruch, ale większość budżetu szła na produkty bez historii konwersji. Feed nieustrukturyzowany, tytuły nie pokrywały intencji zakupowych.
                 </p>
+                <ul className="space-y-2 mb-6 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary shrink-0 mt-0.5">→</span>
+                    Przebudowa feedu w Sembot: tytuły, custom labels, segmentacja wg. marży
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary shrink-0 mt-0.5">→</span>
+                    Wyłączenie nierentownych kategorii i produktów
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary shrink-0 mt-0.5">→</span>
+                    Restrukturyzacja kampanii Shopping + wdrożenie Performance Max
+                  </li>
+                </ul>
+                <div className="grid grid-cols-3 gap-3 pt-5 border-t border-border text-center">
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Przychody</p>
+                    <p className="text-xl font-bold text-primary">+124%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">ROAS</p>
+                    <p className="text-xl font-bold text-primary">240% → 510%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">CPC</p>
+                    <p className="text-xl font-bold text-primary">−38%</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
-            <Card className="border-primary/20 text-center">
+            {/* Case Study 2 */}
+            <Card className="border-primary/20">
               <CardContent className="pt-8 pb-8">
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Koszt kliknięcia</p>
-                <div className="text-5xl font-bold text-primary mb-2">−41%</div>
-                <p className="text-lg font-semibold mb-2">niższy CPC</p>
-                <p className="text-sm text-muted-foreground">
-                  Optymalizacja tytułów produktów i segmentacja feedu
+                <div className="flex flex-wrap gap-2 mb-5">
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">Dom & ogród</span>
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground">4 miesiące</span>
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-muted text-muted-foreground">Performance Max</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-5">
+                  Wysoki CPA mimo dobrego ruchu — problem leżał w śledzeniu konwersji i strukturze kampanii PMax. Budżet 12 tys. zł/mies. bez możliwości oceny co faktycznie działa.
                 </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-primary/20 text-center">
-              <CardContent className="pt-8 pb-8">
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">ROAS</p>
-                <div className="text-5xl font-bold text-primary mb-2">680%</div>
-                <p className="text-lg font-semibold mb-2">zwrot z wydatków</p>
-                <p className="text-sm text-muted-foreground">
-                  Wzrost z 320% do 680% w ciągu 4 miesięcy współpracy
-                </p>
+                <ul className="space-y-2 mb-6 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary shrink-0 mt-0.5">→</span>
+                    Audyt i naprawa śledzenia konwersji (GA4 + GTM)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary shrink-0 mt-0.5">→</span>
+                    Restrukturyzacja asset groups i sygnałów odbiorców w PMax
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary shrink-0 mt-0.5">→</span>
+                    Optymalizacja feedu pod kątem rentowności produktów
+                  </li>
+                </ul>
+                <div className="grid grid-cols-3 gap-3 pt-5 border-t border-border text-center">
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">CPA</p>
+                    <p className="text-xl font-bold text-primary">−41%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">ROAS</p>
+                    <p className="text-xl font-bold text-primary">320% → 610%</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Konwersje</p>
+                    <p className="text-xl font-bold text-primary">+78%</p>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Testimonial-style quote */}
-          <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
-            <CardContent className="pt-8 pb-8">
-              <div className="max-w-3xl mx-auto text-center">
-                <div className="text-6xl text-primary mb-4">"</div>
-                <p className="text-xl italic text-muted-foreground mb-6">
-                  80% sukcesu kampanii PPC to nie same ustawienia reklam - to jakość feedu produktowego
-                  i optymalizacja strony docelowej. Większość specjalistów tego nie rozumie.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  — Jarosław Rzepa, 10 lat doświadczenia w PPC
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <p className="text-center text-xs text-muted-foreground mt-8">
+            Nazwy klientów pozostają poufne. Wyniki zależą od branży, budżetu i punktu startowego.
+          </p>
         </div>
       </section>
 
