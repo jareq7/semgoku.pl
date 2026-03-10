@@ -8,6 +8,7 @@ import ConversionTracker from "./ConversionTracker";
 export const metadata = {
   title: "Dziękuję za wiadomość - SEMGOKU",
   description: "Dostałem Twoją wiadomość. Odezwę się najszybciej jak mogę.",
+  robots: { index: false, follow: false },
 };
 
 export default function ThanksPage() {
