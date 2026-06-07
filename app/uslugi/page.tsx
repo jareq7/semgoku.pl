@@ -240,9 +240,9 @@ export default function UslugiPage() {
           <h2 className="text-3xl font-bold text-center mb-10">Wyniki które osiągam</h2>
           <div className="grid sm:grid-cols-3 gap-6">
             {[
-              { value: "+170%", label: "wzrost przychodów", context: "e-commerce fashion, 6 miesięcy" },
-              { value: "6.8x", label: "ROAS", context: "Google Shopping po optymalizacji feedu" },
-              { value: "-41%", label: "redukcja CPC", context: "restrukturyzacja kampanii Search" },
+              { value: "+124%", label: "wzrost przychodów", context: "e-commerce fashion, 6 miesięcy" },
+              { value: "6.1x", label: "ROAS", context: "dom & ogród, po optymalizacji feedu" },
+              { value: "-41%", label: "spadek CPA", context: "restrukturyzacja kampanii PMax" },
             ].map((stat) => (
               <Card key={stat.label} className="text-center border-primary/20">
                 <CardContent className="pt-8 pb-6">
@@ -302,21 +302,13 @@ export default function UslugiPage() {
             Zacznijmy od bezpłatnej konsultacji — opowiedz mi o swoim biznesie,
             a powiem Ci co można poprawić.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Link
               href="/#kontakt"
               className="px-8 py-3 rounded-lg bg-primary text-white hover:opacity-90 transition-opacity font-semibold text-lg"
             >
               Bezpłatna konsultacja
             </Link>
-            <a
-              href="https://cal.eu/semgoku/darmowa-konsultacja"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-3 rounded-lg border border-border text-foreground hover:bg-muted/60 transition-colors font-medium text-lg"
-            >
-              Zarezerwuj termin
-            </a>
           </div>
         </div>
       </section>

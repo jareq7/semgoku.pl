@@ -53,9 +53,6 @@ export default function ThanksPage() {
                 <p className="text-foreground font-medium">
                   Nie zostawiam ludzi bez odpowiedzi.
                 </p>
-                <p className="pt-4">
-                  Nie możesz czekać? <a href="https://cal.eu/semgoku/darmowa-konsultacja" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">Zarezerwuj termin rozmowy →</a>
-                </p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
