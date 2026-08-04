@@ -94,6 +94,14 @@ export default function Home() {
                 <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                   Wyślij wiadomość
                 </Button>
+
+                <p className="text-xs text-muted-foreground/60 leading-relaxed">
+                  Administratorem danych jest SEMGOKU Jarosław Rzepa. Wysyłając formularz zgadzasz
+                  się na przetwarzanie danych w celu odpowiedzi na Twoje zapytanie. Szczegóły w{" "}
+                  <Link href="/polityka-prywatnosci" className="underline underline-offset-2 hover:text-primary transition-colors">
+                    polityce prywatności
+                  </Link>.
+                </p>
               </form>
             </CardContent>
           </Card>
@@ -779,6 +787,8 @@ export default function Home() {
                   onSubmit={() => trackFormSubmit('kontakt', 'sekcja_kontakt')}
                 >
                   <input type="hidden" name="access_key" value="fd7c1348-4032-41f7-bc4f-297a24fb6c9d" />
+                  <input type="hidden" name="subject" value="Nowy kontakt z SEMGOKU.pl" />
+                  <input type="hidden" name="from_name" value="Formularz SEMGOKU" />
                   <input type="hidden" name="redirect" value="https://semgoku.pl/dziekuje" />
 
                   <div>
@@ -828,7 +838,11 @@ export default function Home() {
                   </Button>
 
                   <p className="text-xs text-muted-foreground text-center">
-                    Twoje dane są bezpieczne. Nie sprzedaję, nie udostępniam, nie spamują.
+                    Twoje dane są bezpieczne. Nie sprzedaję, nie udostępniam, nie spamuję.
+                    Szczegóły w{" "}
+                    <Link href="/polityka-prywatnosci" className="underline underline-offset-2 hover:text-primary transition-colors">
+                      polityce prywatności
+                    </Link>.
                   </p>
                 </form>
               </CardContent>
@@ -938,6 +952,10 @@ export default function Home() {
                 </Link>
               </div>
               <div className="text-xs text-muted-foreground">
+                <Link href="/polityka-prywatnosci" className="hover:text-primary transition-colors">
+                  Polityka prywatności
+                </Link>
+                {" | "}
                 <button
                   onClick={() => window.dispatchEvent(new Event("semgoku:open-consent"))}
                   className="hover:text-primary transition-colors cursor-pointer"

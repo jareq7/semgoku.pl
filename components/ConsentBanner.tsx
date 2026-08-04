@@ -162,7 +162,12 @@ export default function ConsentBanner() {
                 </div>
 
                 <p className="text-xs text-muted-foreground/50">
-                  Polityka prywatności (wkrótce).
+                  <a
+                    href="/polityka-prywatnosci"
+                    className="underline underline-offset-2 hover:text-muted-foreground transition-colors"
+                  >
+                    Polityka prywatności
+                  </a>
                 </p>
               </div>
             </>

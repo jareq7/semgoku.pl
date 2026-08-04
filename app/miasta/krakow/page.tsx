@@ -58,7 +58,7 @@ export default function KrakowPage() {
               Specjalista Google Ads <span className="text-primary">Kraków</span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-              Jestem z Krakowa i obsługuję firmy z całego Małopolski.
+              Obsługuję firmy z Krakowa i całej Małopolski.
               Google Ads, Meta Ads, Microsoft Advertising + optymalizacja feedów produktowych.
             </p>
           </div>
@@ -83,8 +83,8 @@ export default function KrakowPage() {
                 <div className="space-y-4">
                   <h2 className="text-3xl font-bold">Dlaczego lokalny specjalista?</h2>
                   <p className="text-muted-foreground text-lg">
-                    <strong className="text-foreground">Jestem z Krakowa</strong> i rozumiem lokalny rynek.
-                    Pracuję z firmami z całego Małopolski - zarówno zdalnie jak i z możliwością spotkań osobistych.
+                    <strong className="text-foreground">Obsługuję firmy z Krakowa</strong> i rozumiem lokalny rynek.
+                    Pracuję z firmami z całej Małopolski - zarówno zdalnie jak i z możliwością spotkań osobistych.
                   </p>
                   <p className="text-muted-foreground">
                     <strong className="text-primary">10 lat doświadczenia</strong> w kampaniach PPC dla e-commerce,
