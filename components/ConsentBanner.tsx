@@ -2,7 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { getStoredConsent, applyConsentToGtag, grantConsent } from "@/lib/consent";
+
+// Na stronie polityki baner nie wyskakuje sam — trzeba móc ją przeczytać
+// przed wyrażeniem zgody (tracking i tak jest domyślnie zablokowany).
+const POLICY_PATH = "/polityka-prywatnosci";
 
 type View = "banner" | "settings" | "hidden";
 
@@ -38,6 +43,7 @@ export default function ConsentBanner() {
   const [view, setView] = useState<View>("hidden");
   const [analytics, setAnalytics] = useState(false);
   const [advertising, setAdvertising] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const stored = getStoredConsent();
@@ -45,9 +51,9 @@ export default function ConsentBanner() {
       applyConsentToGtag(stored.analytics, stored.advertising);
       setView("hidden");
     } else {
-      setView("banner");
+      setView(pathname === POLICY_PATH ? "hidden" : "banner");
     }
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     const handler = () => {
@@ -178,7 +184,7 @@ export default function ConsentBanner() {
               {/* Header */}
               <div className="flex items-center gap-3">
                 <button
-                  onClick={() => setView("banner")}
+                  onClick={() => setView(pathname === POLICY_PATH ? "hidden" : "banner")}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
                 >
                   ← Wróć
