@@ -32,8 +32,6 @@ export function resetDataLayer() {
     cta_text: undefined,
     cta_location: undefined,
     cta_url: undefined,
-    click_location: undefined,
-    booking_type: undefined,
     form_name: undefined,
     form_location: undefined,
     conversion_type: undefined,
@@ -63,14 +61,6 @@ export function trackCtaClick(ctaText: string, ctaLocation: string, ctaUrl: stri
     cta_text: ctaText,
     cta_location: ctaLocation,
     cta_url: ctaUrl,
-  });
-}
-
-export function trackCalBookingClick(clickLocation: string) {
-  pushDataLayer({
-    event: 'cal_booking_click',
-    booking_type: 'darmowa_konsultacja',
-    click_location: clickLocation,
   });
 }
 
