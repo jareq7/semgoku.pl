@@ -3,7 +3,6 @@
 import { useEffect, useCallback, useRef } from "react";
 import { usePathname } from "next/navigation";
 import {
-  trackCalBookingClick,
   trackCtaClick,
   trackFormStart,
   trackOutboundClick,
@@ -49,22 +48,6 @@ export default function DataLayerTracker() {
   const trackedDepths = useRef<Set<number>>(new Set());
   const trackedForms = useRef<Set<string>>(new Set());
 
-  // Reset dataLayer and re-track on SPA navigation
-  useEffect(() => {
-    resetDataLayer();
-    trackedSections.current.clear();
-    trackedDepths.current.clear();
-    trackedForms.current.clear();
-
-    const pageType = pathname === "/" ? "homepage"
-      : pathname.startsWith("/miasta/") ? "city_landing"
-      : pathname === "/miasta" ? "city_hub"
-      : pathname === "/dziekuje" ? "thank_you"
-      : "other";
-
-    trackPageView(pageType, pathname, document.title);
-  }, [pathname]);
-
   const handleClick = useCallback((e: MouseEvent) => {
     const target = e.target as HTMLElement;
     const link = target.closest("a");
@@ -75,12 +58,6 @@ export default function DataLayerTracker() {
 
     const href = link?.getAttribute("href") || "";
     const text = el.textContent?.trim() || "";
-
-    // Cal.com booking clicks
-    if (href.includes("cal.eu/semgoku")) {
-      trackCalBookingClick(getSectionId(el));
-      return;
-    }
 
     // Outbound links (LinkedIn, mailto, tel, external)
     if (link && isOutboundLink(href)) {
@@ -153,19 +130,40 @@ export default function DataLayerTracker() {
     return () => observer.disconnect();
   }, []);
 
+  // Reset dataLayer and re-track on SPA navigation
+  useEffect(() => {
+    resetDataLayer();
+    trackedSections.current.clear();
+    trackedDepths.current.clear();
+    trackedForms.current.clear();
+
+    const pageType = pathname === "/" ? "homepage"
+      : pathname.startsWith("/miasta/") ? "city_landing"
+      : pathname === "/miasta" ? "city_hub"
+      : pathname === "/dziekuje" ? "thank_you"
+      : pathname === "/uslugi" ? "services"
+      : pathname === "/polityka-prywatnosci" ? "legal"
+      : "other";
+
+    trackPageView(pageType, pathname, document.title);
+
+    // Sekcje to nowe węzły DOM po każdej nawigacji SPA — observer
+    // z poprzedniej strony ich nie widzi, trzeba podpiąć od nowa.
+    const cleanupObserver = observeSections();
+    return () => cleanupObserver?.();
+  }, [pathname, observeSections]);
+
   useEffect(() => {
     document.addEventListener("click", handleClick, true);
     document.addEventListener("focusin", handleFocusin, true);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    const cleanupObserver = observeSections();
 
     return () => {
       document.removeEventListener("click", handleClick, true);
       document.removeEventListener("focusin", handleFocusin, true);
       window.removeEventListener("scroll", handleScroll);
-      cleanupObserver?.();
     };
-  }, [handleClick, handleFocusin, handleScroll, observeSections]);
+  }, [handleClick, handleFocusin, handleScroll]);
 
   return null;
 }
