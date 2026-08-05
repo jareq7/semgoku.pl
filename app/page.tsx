@@ -19,6 +19,17 @@ export default function Home() {
   const targetRevenue = adSpend[0] * targetMultiplier[0];
   const potentialGain = targetRevenue - currentRevenue;
 
+  // Natywny POST wyładowuje stronę zanim GTM zdąży wysłać hit form_submit —
+  // wstrzymujemy wysyłkę o moment, żeby event dotarł do GA4.
+  const handleFormSubmit =
+    (formName: string, formLocation: string) =>
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      trackFormSubmit(formName, formLocation);
+      setTimeout(() => form.submit(), 400);
+    };
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -42,12 +53,12 @@ export default function Home() {
                 method="POST"
                 className="space-y-4"
                 data-form-name="kontakt_modal"
-                onSubmit={() => trackFormSubmit('kontakt', 'modal')}
+                onSubmit={handleFormSubmit('kontakt_modal', 'modal')}
               >
                 <input type="hidden" name="access_key" value="fd7c1348-4032-41f7-bc4f-297a24fb6c9d" />
                 <input type="hidden" name="subject" value="Nowy kontakt z SEMGOKU.pl" />
                 <input type="hidden" name="from_name" value="Formularz SEMGOKU" />
-                <input type="hidden" name="redirect" value="/dziekuje" />
+                <input type="hidden" name="redirect" value="https://semgoku.pl/dziekuje" />
 
                 <div>
                   <label htmlFor="website" className="block text-sm font-medium mb-2">
@@ -784,7 +795,7 @@ export default function Home() {
                   method="POST"
                   className="space-y-4"
                   data-form-name="kontakt_inline"
-                  onSubmit={() => trackFormSubmit('kontakt', 'sekcja_kontakt')}
+                  onSubmit={handleFormSubmit('kontakt_inline', 'kontakt')}
                 >
                   <input type="hidden" name="access_key" value="fd7c1348-4032-41f7-bc4f-297a24fb6c9d" />
                   <input type="hidden" name="subject" value="Nowy kontakt z SEMGOKU.pl" />
